@@ -10,6 +10,7 @@ export default class App extends React.Component {
     this.logo2AnimatedValue = new Animated.Value(0);
     this.logo3AnimatedValue = new Animated.Value(0);
     this.bubbleAnimatedValue = new Animated.Value(0);
+    this.logoWrapperAnimatedValue = new Animated.Value(0);
   }
 
   componentDidMount() {
@@ -17,6 +18,7 @@ export default class App extends React.Component {
     this.logo2AnimatedValue.setValue(0);
     this.logo3AnimatedValue.setValue(0);
     this.bubbleAnimatedValue.setValue(0);
+    this.logoWrapperAnimatedValue.setValue(0);
 
     // Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
 
@@ -38,7 +40,12 @@ export default class App extends React.Component {
       }),
       Animated.timing(this.bubbleAnimatedValue, {
         toValue: 2.25,
-        duration: 1000,
+        duration: 2250,
+        easing: Easing.linear
+      }),
+      Animated.timing(this.logoWrapperAnimatedValue, {
+        toValue: 1,
+        duration: 200,
         easing: Easing.linear
       })
     ]).start();
@@ -89,6 +96,12 @@ export default class App extends React.Component {
       outputRange: [0, 0.1, 1]
     });
 
+    // animations for logoWrapper
+    const logoWrapperMoveY = this.logoWrapperAnimatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, height]
+    });
+
     const bubbleTransformStyle = [];
 
     for (let bubbleStart of [0, 0.75, 1.25]) {
@@ -119,11 +132,15 @@ export default class App extends React.Component {
       opacity: logo3Opacity
     };
 
+    const logoWrapperTransformStyle = {
+      transform: [{ translateY: logoWrapperMoveY }]
+    };
+
     return (
       <LinearGradient
         colors={['#00d0ff', '#235c81']}
         style={{flex: 1}}>
-        <View style={styles.container}>
+        <Animated.View style={[styles.logoWrapperContainer, logoWrapperTransformStyle]}>
           <Animated.Image
             source={require('./assets/images/logo-1.png')}
             style={[styles.logo1Container, logo1TransformStyle]}
@@ -148,14 +165,14 @@ export default class App extends React.Component {
             source={require('./assets/images/bubble.png')}
             style={[styles.logo3Container, bubbleTransformStyle[2]]}
           />
-        </View>
+        </Animated.View>
       </LinearGradient>
     );
   }
 }
 
 const styles = {
-  container: {
+  logoWrapperContainer: {
     flex: 1,
     // alignItems: 'center',
     // justifyContent: 'center',
