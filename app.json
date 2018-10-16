@@ -21,7 +21,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jsguru.allAboutRainbowTrout"
+    },
+    "android": {
+      "package": "com.jsguru.allAboutRainbowTrout"
     },
     "packagerOpts": {
       "sourceExts": ["js", "jsx", "scss", "sass"],
