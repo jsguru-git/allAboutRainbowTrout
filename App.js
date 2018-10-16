@@ -18,7 +18,7 @@ export default class App extends React.Component {
     this.logo3AnimatedValue.setValue(0);
     this.bubbleAnimatedValue.setValue(0);
 
-    Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
+    // Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
 
     Animated.sequence([
       Animated.timing(this.logo1AnimatedValue, {
@@ -45,16 +45,16 @@ export default class App extends React.Component {
   }
 
   componentWillUnmount() {
-    Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
+    // Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
   }
 
   render() {
     const { width, height } = Dimensions.get('window');
     const logoTxtMiddleY = [];
-    logoTxtMiddleY[0] = width * 0.4;
+    logoTxtMiddleY[0] = height * 0.4;
     logoTxtMiddleY[1] = logoTxtMiddleY[0] + 170;
 
-    const logo1MiddleY = width * 0.4;
+    const logo1MiddleY = height * 0.4;
     const logo2MiddleY = logo1MiddleY + 170;
     const logo3MiddleY = logo1MiddleY + 10;
     const bubbleMiddleY = logo3MiddleY + 50;
@@ -101,21 +101,21 @@ export default class App extends React.Component {
         outputRange: [0, 1, 1]
       });
       bubbleTransformStyle.push({
-        transform: [{ translateY: bubbleMoveY }, { translateX: height/2 - 164 - 20 }, { scale: 0.3 }],
+        transform: [{ translateY: bubbleMoveY }, { translateX: width/2 - 164 - 20 }, { scale: 0.3 }],
         opacity: bubbleOpacity
       });
     }
 
     const logo1TransformStyle = {
-      transform: [{ translateY: logo1MoveY }, { translateX:  height/2 - 125 }, { scale:logo1Scale }]
+      transform: [{ translateY: logo1MoveY }, { translateX:  width/2 - 125 }, { scale:logo1Scale }]
     };
 
     const logo2TransformStyle = {
-      transform: [{ translateY: logo2MoveY }, { translateX:  height/2 - 266 }, { scale:logo2Scale }]
+      transform: [{ translateY: logo2MoveY }, { translateX:  width/2 - 266 }, { scale:logo2Scale }]
     };
 
     const logo3TransformStyle = {
-      transform: [{ translateY: logo3MoveY }, { translateX:  height/2 - 164 }],
+      transform: [{ translateY: logo3MoveY }, { translateX:  width/2 - 164 }],
       opacity: logo3Opacity
     };
 
