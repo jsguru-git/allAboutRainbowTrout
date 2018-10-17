@@ -14,46 +14,41 @@ export default class IntroAnimation extends React.Component {
   }
 
   componentDidMount() {
-    this.logo1AnimatedValue.setValue(0);
-    this.logo2AnimatedValue.setValue(0);
-    this.logo3AnimatedValue.setValue(0);
-    this.bubbleAnimatedValue.setValue(0);
-    this.logoWrapperAnimatedValue.setValue(0);
-
-    // Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
-
-    Animated.sequence([
-      Animated.timing(this.logo1AnimatedValue, {
-        toValue: 1,
-        duration: 300,
-        easing: Easing.linear
-      }),
-      Animated.timing(this.logo2AnimatedValue, {
-        toValue: 1,
-        duration: 300,
-        easing: Easing.linear
-      }),
-      Animated.timing(this.logo3AnimatedValue, {
-        toValue: 1,
-        duration: 300,
-        easing: Easing.linear
-      }),
-      Animated.timing(this.bubbleAnimatedValue, {
-        toValue: 2.25,
-        duration: 2250,
-        easing: Easing.linear
-      }),
-      Animated.timing(this.logoWrapperAnimatedValue, {
-        toValue: 1,
-        duration: 200,
-        easing: Easing.linear
-      })
-    ]).start();
+		// Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
+		this.animate();
   }
 
   componentWillUnmount() {
     // Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
-  }
+	}
+	
+	animate() {
+		this.logo1AnimatedValue.setValue(0);
+    this.logo2AnimatedValue.setValue(0);
+    this.logo3AnimatedValue.setValue(0);
+    this.bubbleAnimatedValue.setValue(0);
+		this.logoWrapperAnimatedValue.setValue(0);
+		
+		const createTimingAnimation = (animValue, toValue, duration, easing, delay = 0) => {
+			return Animated.timing(
+				animValue,
+				{
+					toValue,
+					duration,
+					easing,
+					delay
+				}
+			);
+		}
+
+    Animated.sequence([
+			createTimingAnimation(this.logo1AnimatedValue, 1, 300, Easing.linear),
+			createTimingAnimation(this.logo2AnimatedValue, 1, 300, Easing.linear),
+			createTimingAnimation(this.logo3AnimatedValue, 1, 300, Easing.linear),
+			createTimingAnimation(this.bubbleAnimatedValue, 2.25, 2250, Easing.linear),
+			createTimingAnimation(this.logo1AnimatedValue, 1, 200, Easing.linear)
+    ]).start();	
+	}
 
   render() {
     const { width, height } = Dimensions.get('window');
@@ -136,31 +131,32 @@ export default class IntroAnimation extends React.Component {
       transform: [{ translateY: logoWrapperMoveY }]
     };
 
+    const assets = '../../assets';
     return (
       <View style={{flex: 1}}>
         <Animated.View style={[styles.logoWrapperContainer, logoWrapperTransformStyle]}>
           <Animated.Image
-            source={require('./assets/images/logo-1.png')}
+            source={require(assets + '/images/logo-1.png')}
             style={[styles.logo1Container, logo1TransformStyle]}
           />
           <Animated.Image
-            source={require('./assets/images/logo-2.png')}
+            source={require(assets + '/images/logo-2.png')}
             style={[styles.logo2Container, logo2TransformStyle]}
           />
           <Animated.Image
-            source={require('./assets/images/logo-3.png')}
+            source={require(assets + '/images/logo-3.png')}
             style={[styles.logo3Container, logo3TransformStyle]}
           />
           <Animated.Image
-            source={require('./assets/images/bubble.png')}
+            source={require(assets + '/images/bubble.png')}
             style={[styles.logo3Container, bubbleTransformStyle[0]]}
           />
           <Animated.Image
-            source={require('./assets/images/bubble.png')}
+            source={require(assets + '/images/bubble.png')}
             style={[styles.logo3Container, bubbleTransformStyle[1]]}
           />
           <Animated.Image
-            source={require('./assets/images/bubble.png')}
+            source={require(assets + '/images/bubble.png')}
             style={[styles.logo3Container, bubbleTransformStyle[2]]}
           />
         </Animated.View>
