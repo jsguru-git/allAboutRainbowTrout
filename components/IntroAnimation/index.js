@@ -1,8 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { terminateLoading } from '../../actions';
 import { View, Animated, Easing, Dimensions } from 'react-native';
 import { IMAGES } from '../../utiles';
 
-export default class IntroAnimation extends React.Component {
+const mapDispatchToProps = dispatch => {
+  return {
+    terminateAnimation: isTerminated => {
+      dispatch(terminateLoading(isTerminated));
+    }
+  }
+}
+
+class IntroAnimation extends React.Component {
 
   constructor(props) {
     super(props);
@@ -46,8 +56,8 @@ export default class IntroAnimation extends React.Component {
 			createTimingAnimation(this.logo2AnimatedValue, 1, 300, Easing.linear),
 			createTimingAnimation(this.logo3AnimatedValue, 1, 300, Easing.linear),
 			createTimingAnimation(this.bubbleAnimatedValue, 2.25, 2250, Easing.linear),
-			createTimingAnimation(this.logo1AnimatedValue, 1, 200, Easing.linear)
-    ]).start();	
+			createTimingAnimation(this.logoWrapperAnimatedValue, 1, 200, Easing.linear)
+    ]).start(() => this.props.terminateAnimation(true));	
 	}
 
   render() {
@@ -182,3 +192,5 @@ const styles = {
     position: "absolute",
   },
 };
+
+export default connect(null, mapDispatchToProps)(IntroAnimation);
