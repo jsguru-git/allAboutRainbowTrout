@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Image, Animated, Easing, Dimensions } from 'react-native';
-import { LinearGradient } from 'expo';
+import { View, Animated, Easing, Dimensions } from 'react-native';
+import { IMAGES } from '../../utiles';
 
 export default class IntroAnimation extends React.Component {
 
@@ -131,32 +131,31 @@ export default class IntroAnimation extends React.Component {
       transform: [{ translateY: logoWrapperMoveY }]
     };
 
-    const assets = '../../assets';
     return (
       <View style={{flex: 1}}>
         <Animated.View style={[styles.logoWrapperContainer, logoWrapperTransformStyle]}>
           <Animated.Image
-            source={require(assets + '/images/logo-1.png')}
+            source={IMAGES.logo_1}
             style={[styles.logo1Container, logo1TransformStyle]}
           />
           <Animated.Image
-            source={require(assets + '/images/logo-2.png')}
+            source={IMAGES.logo_2}
             style={[styles.logo2Container, logo2TransformStyle]}
           />
           <Animated.Image
-            source={require(assets + '/images/logo-3.png')}
+            source={IMAGES.logo_3}
             style={[styles.logo3Container, logo3TransformStyle]}
           />
           <Animated.Image
-            source={require(assets + '/images/bubble.png')}
+            source={IMAGES.bubble}
             style={[styles.logo3Container, bubbleTransformStyle[0]]}
           />
           <Animated.Image
-            source={require(assets + '/images/bubble.png')}
+            source={IMAGES.bubble}
             style={[styles.logo3Container, bubbleTransformStyle[1]]}
           />
           <Animated.Image
-            source={require(assets + '/images/bubble.png')}
+            source={IMAGES.bubble}
             style={[styles.logo3Container, bubbleTransformStyle[2]]}
           />
         </Animated.View>

@@ -11,7 +11,9 @@
   "dependencies": {
     "expo": "^30.0.1",
     "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz"
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "node-sass": "^4.9.4",

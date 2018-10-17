@@ -1,15 +1,13 @@
 import React from 'react';
-import { LinearGradient } from 'expo';
-import IntroAnimation from './components/IntroAnimation/IntroAnimation.component';
+import { View } from 'react-native';
+import EnterGame from './containers/EnterGame';
 
 export default class App extends React.Component {
   render() {
     return (
-      <LinearGradient
-        colors={['#00d0ff', '#235c81']}
-        style={{flex: 1}}>
-        <IntroAnimation />
-      </LinearGradient>
+      <View style={{flex: 1}}>
+        <EnterGame />
+      </View>
     );
   }
 }
