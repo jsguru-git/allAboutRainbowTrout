@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { terminateLoading } from '../../actions';
-import { View, Animated, Easing, Dimensions } from 'react-native';
-import { IMAGES } from '../../utiles';
+import { View, Animated, Easing, Image } from 'react-native';
+import { IMAGES, SCREEN } from '../../utiles';
+
+const logo1Dim = Image.resolveAssetSource(IMAGES.logo_1);
+const logo2Dim = Image.resolveAssetSource(IMAGES.logo_2);
+const logo3Dim = Image.resolveAssetSource(IMAGES.logo_3);
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -61,12 +65,11 @@ class IntroAnimation extends React.Component {
 	}
 
   render() {
-    const { width, height } = Dimensions.get('window');
     const logoTxtMiddleY = [];
-    logoTxtMiddleY[0] = height * 0.4;
+    logoTxtMiddleY[0] = SCREEN.height * 0.4;
     logoTxtMiddleY[1] = logoTxtMiddleY[0] + 170;
 
-    const logo1MiddleY = height * 0.4;
+    const logo1MiddleY = SCREEN.height * 0.4;
     const logo2MiddleY = logo1MiddleY + 170;
     const logo3MiddleY = logo1MiddleY + 10;
     const bubbleMiddleY = logo3MiddleY + 50;
@@ -104,7 +107,7 @@ class IntroAnimation extends React.Component {
     // animations for logoWrapper
     const logoWrapperMoveY = this.logoWrapperAnimatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, height]
+      outputRange: [0, SCREEN.height]
     });
 
     const bubbleTransformStyle = [];
@@ -119,21 +122,21 @@ class IntroAnimation extends React.Component {
         outputRange: [0, 1, 1]
       });
       bubbleTransformStyle.push({
-        transform: [{ translateY: bubbleMoveY }, { translateX: width/2 - 164 - 20 }, { scale: 0.3 }],
+        transform: [{ translateY: bubbleMoveY }, { translateX: - 20 }, { scale: 0.3 }],
         opacity: bubbleOpacity
       });
     }
 
     const logo1TransformStyle = {
-      transform: [{ translateY: logo1MoveY }, { translateX:  width/2 - 125 }, { scale:logo1Scale }]
+      transform: [{ translateY: logo1MoveY }, { scale:logo1Scale }]
     };
 
     const logo2TransformStyle = {
-      transform: [{ translateY: logo2MoveY }, { translateX:  width/2 - 266 }, { scale:logo2Scale }]
+      transform: [{ translateY: logo2MoveY }, { scale:logo2Scale }]
     };
 
     const logo3TransformStyle = {
-      transform: [{ translateY: logo3MoveY }, { translateX:  width/2 - 164 }],
+      transform: [{ translateY: logo3MoveY }],
       opacity: logo3Opacity
     };
 
@@ -182,14 +185,17 @@ const styles = {
   },
   logo1Container: {
     position: "absolute",
-    top: -100
+    top: -100,
+    left: (SCREEN.width - logo1Dim.width)/2
   },
   logo2Container: {
     position: "absolute",
-    top: -200
+    top: -200,
+    left: (SCREEN.width - logo2Dim.width)/2
   },
   logo3Container: {
     position: "absolute",
+    left: (SCREEN.width - logo3Dim.width)/2
   },
 };
 
