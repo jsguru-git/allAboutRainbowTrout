@@ -8,6 +8,7 @@ export default class GamePanel extends React.Component {
 	constructor(props) {
 		super(props);
 		this.panelAnimatedValue = new Animated.Value(0);
+		this.btnCtnAnimatedValue = new Animated.Value(0);
 	}
 
 	componentDidMount() {
@@ -18,8 +19,10 @@ export default class GamePanel extends React.Component {
 
 	animate() {
 		this.panelAnimatedValue.setValue(0);
+		this.btnCtnAnimatedValue.setValue(0);
 		Animated.sequence([
 			createTimingAnimation(this.panelAnimatedValue, 1, 1000, Easing.bezier(0.215, 0.610, 0.355, 1.000)),
+			createTimingAnimation(this.btnCtnAnimatedValue, 1, 50, Easing.bezier(0.250, 0.460, 0.450, 0.940))
 		]).start();
 	}
 
@@ -34,9 +37,21 @@ export default class GamePanel extends React.Component {
       inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
       outputRange: [.3, 1.1, .9, 1.03, .97, 1]
 		});
+		const btnCtnMoveX = this.btnCtnAnimatedValue.interpolate({
+			inputRange: [0, 1],
+			outputRange: [-20, 0]
+		});
+		const btnCtnOpacity = this.btnCtnAnimatedValue.interpolate({
+			inputRange: [0, 1],
+			outputRange: [0, 1]
+		});
 		
 		const panelTransformStyle = {
 			transform: [{ scale: panelScale }]
+		};
+		const btnCtnTransformStyle = {
+			transform: [{ translateX: btnCtnMoveX }],
+			opacity: btnCtnOpacity
 		};
 		
 		return (
@@ -57,7 +72,7 @@ export default class GamePanel extends React.Component {
 							<View
 								style={{flex: 50, paddingLeft: btnCtnOffset, paddingRight: btnCtnOffset}}
 							>
-								<View style={{flex: 1, flexDirection: 'row'}}>
+								<Animated.View style={[{flex: 1, flexDirection: 'row'}, btnCtnTransformStyle]}>
 									<Image
 										style={{
 											flex: 1,
@@ -72,10 +87,10 @@ export default class GamePanel extends React.Component {
 											height: '100%',
 											resizeMode
 										}}
-										source={IMAGES.play}
+										source={IMAGES.learn}
 									/>
 									<View style={{flex: 0.7}} />
-								</View>
+								</Animated.View>
 							</View>
 							<View style={{flex: 22}}></View>
 						</ImageBackground>
