@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { terminateLoading } from '../../actions';
 import { View, Animated, Easing, Image } from 'react-native';
-import { IMAGES, SCREEN } from '../../utiles';
+import { IMAGES, SCREEN, createTimingAnimation } from '../../utiles';
 
 const logo1Dim = Image.resolveAssetSource(IMAGES.logo_1);
 const logo2Dim = Image.resolveAssetSource(IMAGES.logo_2);
@@ -42,18 +42,6 @@ class IntroAnimation extends React.Component {
     this.logo3AnimatedValue.setValue(0);
     this.bubbleAnimatedValue.setValue(0);
 		this.logoWrapperAnimatedValue.setValue(0);
-		
-		const createTimingAnimation = (animValue, toValue, duration, easing, delay = 0) => {
-			return Animated.timing(
-				animValue,
-				{
-					toValue,
-					duration,
-					easing,
-					delay
-				}
-			);
-		}
 
     Animated.sequence([
 			createTimingAnimation(this.logo1AnimatedValue, 1, 300, Easing.linear),

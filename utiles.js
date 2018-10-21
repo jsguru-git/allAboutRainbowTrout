@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Animated } from 'react-native';
 
 export const IMAGES = {
     'logo_1': require('./assets/images/logo-1.png'),
@@ -11,3 +11,15 @@ export const IMAGES = {
 }
 
 export const SCREEN = { width, height } = Dimensions.get('window');
+
+export const createTimingAnimation = (animValue, toValue, duration, easing, delay = 0) => {
+    return Animated.timing(
+        animValue,
+        {
+            toValue,
+            duration,
+            easing,
+            delay
+        }
+    );
+}
