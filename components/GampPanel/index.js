@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Animated, Easing, Image, ImageBackground } from 'react-native';
+import { View, Animated, Easing, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import { IMAGES, SCREEN, createTimingAnimation } from '../../utiles';
 
 const panelDim = Image.resolveAssetSource(IMAGES.panel);
@@ -73,23 +73,27 @@ export default class GamePanel extends React.Component {
 								style={{flex: 50, paddingLeft: btnCtnOffset, paddingRight: btnCtnOffset}}
 							>
 								<Animated.View style={[{flex: 1, flexDirection: 'row'}, btnCtnTransformStyle]}>
-									<Image
-										style={{
-											flex: 1,
-											height: '100%',
-											resizeMode
-										}}
-										source={IMAGES.play}
-									/>
-									<Image
-										style={{
-											flex: 1,
-											height: '100%',
-											resizeMode
-										}}
-										source={IMAGES.learn}
-									/>
-									<View style={{flex: 0.7}} />
+									<TouchableOpacity onPress={() => this.props.navigation.navigate('Game')}>
+										<Image
+											style={{
+												flex: 1,
+												height: '100%',
+												resizeMode
+											}}
+											source={IMAGES.play}
+										/>
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => this.props.navigation.navigate('Learn')}>
+										<Image
+											style={{
+												flex: 1,
+												height: '100%',
+												resizeMode
+											}}
+											source={IMAGES.learn}
+										/>
+									</TouchableOpacity>
+									{/* <View style={{flex: 1}} /> */}
 								</Animated.View>
 							</View>
 							<View style={{flex: 22}}></View>
@@ -100,19 +104,4 @@ export default class GamePanel extends React.Component {
 			</View>
 		);
 	}
-}
-
-const styles = {
-	panel: {
-		position: "absolute",
-		// top: (SCREEN.height - panelDim.height)/2,
-		// left: (SCREEN.width - panelDim.width)/2,
-		// transform: [{scale: 0.9}]
-	},
-	play: {
-		position: "absolute",
-		top: SCREEN.height/2 - 144,
-		// left: SCREEN.width/2 - 106,
-		// transform: [{scale: 0.85}]
-	},
 }
