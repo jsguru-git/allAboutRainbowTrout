@@ -9,6 +9,8 @@ export default class GamePanel extends React.Component {
 		super(props);
 		this.panelAnimatedValue = new Animated.Value(0);
 		this.btnCtnAnimatedValue = new Animated.Value(0);
+		this.background = this.props.background? this.props.background : IMAGES.panel;
+		this.panelType = this.props.panelType? this.props.panelType : 'game';
 	}
 
 	componentDidMount() {
@@ -53,6 +55,32 @@ export default class GamePanel extends React.Component {
 			transform: [{ translateX: btnCtnMoveX }],
 			opacity: btnCtnOpacity
 		};
+
+		const buttonGroup = <Animated.View style={[{flex: 1, flexDirection: 'row'}, btnCtnTransformStyle]}>
+			<TouchableOpacity onPress={() => this.props.navigation.navigate('Game')}>
+				<Image
+					style={{
+						flex: 1,
+						height: '100%',
+						resizeMode
+					}}
+					source={IMAGES.play}
+				/>
+			</TouchableOpacity>
+			<TouchableOpacity onPress={() => this.props.navigation.navigate('Learn')}>
+				<Image
+					style={{
+						flex: 1,
+						height: '100%',
+						resizeMode
+					}}
+					source={IMAGES.learn}
+				/>
+			</TouchableOpacity>
+			{/* <View style={{flex: 1}} /> */}
+		</Animated.View>
+
+		const pingPong = <Image source={IMAGES.loading} style={{ alignSelf: 'center' }} resizeMode='center' />
 		
 		return (
 			<View style={{flex: 1}}>
@@ -60,7 +88,7 @@ export default class GamePanel extends React.Component {
 				<View style={{flex: 80}}>
 					<Animated.View style={[{flex: 1}, panelTransformStyle]}>
 						<ImageBackground
-							source={IMAGES.panel}
+							source={this.background}
 							imageStyle={{resizeMode}}
 							style={{
 								flex: 1,
@@ -72,29 +100,7 @@ export default class GamePanel extends React.Component {
 							<View
 								style={{flex: 50, paddingLeft: btnCtnOffset, paddingRight: btnCtnOffset}}
 							>
-								<Animated.View style={[{flex: 1, flexDirection: 'row'}, btnCtnTransformStyle]}>
-									<TouchableOpacity onPress={() => this.props.navigation.navigate('Game')}>
-										<Image
-											style={{
-												flex: 1,
-												height: '100%',
-												resizeMode
-											}}
-											source={IMAGES.play}
-										/>
-									</TouchableOpacity>
-									<TouchableOpacity onPress={() => this.props.navigation.navigate('Learn')}>
-										<Image
-											style={{
-												flex: 1,
-												height: '100%',
-												resizeMode
-											}}
-											source={IMAGES.learn}
-										/>
-									</TouchableOpacity>
-									{/* <View style={{flex: 1}} /> */}
-								</Animated.View>
+								{(this.panelType == 'game')? buttonGroup : pingPong}
 							</View>
 							<View style={{flex: 22}}></View>
 						</ImageBackground>
