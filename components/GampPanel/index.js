@@ -36,8 +36,8 @@ export default class GamePanel extends React.Component {
 		const btnCtnOffset = pW * 0.12;
 
 		const panelScale = this.panelAnimatedValue.interpolate({
-      inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      outputRange: [.3, 1.1, .9, 1.03, .97, 1]
+			inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
+			outputRange: [.3, 1.1, .9, 1.03, .97, 1]
 		});
 		const btnCtnMoveX = this.btnCtnAnimatedValue.interpolate({
 			inputRange: [0, 1],

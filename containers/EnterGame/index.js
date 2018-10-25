@@ -16,8 +16,8 @@ class EnterGame extends React.Component {
       <LinearGradient
         colors={['#00d0ff', '#235c81']}
         style={{flex: 1}}>
-        {/* { this.props.isLoading? <IntroAnimation /> : <GamePanel navigation={this.props.navigation} /> } */}
-        <GamePanel navigation={this.props.navigation} />
+        { this.props.isLoading? <IntroAnimation /> : <GamePanel navigation={this.props.navigation} /> }
+        {/* <GamePanel navigation={this.props.navigation} /> */}
       </LinearGradient>
     );
   }

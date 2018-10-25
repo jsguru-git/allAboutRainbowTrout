@@ -1,12 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Image, ImageBackground, View, Animated, Easing } from 'react-native';
 import { Svg } from 'expo';
 // import { Svg, Path, Circle, Rect } from 'react-native-svg';
 import { IMAGES, SCREEN, createTimingAnimation } from '../../utiles';
+import { GAME_STATUS } from '../../actions';
 
 const { Path } = Svg;
 
-export default class GameScreen extends React.Component {
+const mapStateToProps = state => {
+	return {
+		gameState: state.gameState
+	}
+}
+
+class GameScreen extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -102,10 +110,10 @@ export default class GameScreen extends React.Component {
 					>
 						<View style={{flex: 5, flexDirection: 'row'}}>
 							<View style={{flex: 4}}></View>
-							<View style={{flex: 3, flexDirection: 'row', justifyContent: 'flex-end', padding: 5}}>
+							{ (this.props.gameState.status !== GAME_STATUS.GAME_OVER)? (<View style={{flex: 3, flexDirection: 'row', justifyContent: 'flex-end', padding: 5}}>
 								<Image source={IMAGES.score} style={styles.scoreImg} />
 								<Image source={IMAGES.clock} style={styles.scoreImg}/>
-							</View>
+							</View>) : null }
 						</View>
 						<View style={{flex: 14}}>
 						</View>
@@ -150,3 +158,5 @@ const styles = {
 		height: '100%',
 	}
 }
+
+export default connect(mapStateToProps)(GameScreen)

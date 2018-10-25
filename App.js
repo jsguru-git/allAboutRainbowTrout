@@ -11,8 +11,7 @@ import {
   createReactNavigationReduxMiddleware, 
   createNavigationReducer,
 } from 'react-navigation-redux-helpers';
-import { loadingReducer } from './reducer';
-import EnterGame from './containers/EnterGame';
+import { loadingReducer, gameStateReducer } from './reducer';
 import AppNavigator from './navigator';
 
 
@@ -20,6 +19,7 @@ const navReducer = createNavigationReducer(AppNavigator);
 const appReducer = combineReducers({
   nav: navReducer,
   isLoading: loadingReducer,
+  gameState: gameStateReducer,
 });
 const middleware = createReactNavigationReduxMiddleware(
   "root",
