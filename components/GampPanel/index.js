@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Animated, Easing, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import { IMAGES, SCREEN, createTimingAnimation } from '../../utiles';
+import VideoPlayer from '../VideoPlayer';
 
 const panelDim = Image.resolveAssetSource(IMAGES.panel);
 export default class GamePanel extends React.Component {
@@ -33,7 +34,8 @@ export default class GamePanel extends React.Component {
 		const pH = SCREEN.height * 0.8;
 		const pW = panelDim.width / panelDim.height * pH;
 		const pL = (SCREEN.width - pW) / 2;
-		const btnCtnOffset = pW * 0.12;
+		const btnCtnLOffset = pW * 0.13;
+		const btnCtnROffset = pW * 0.155;
 
 		const panelScale = this.panelAnimatedValue.interpolate({
 			inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
@@ -56,7 +58,7 @@ export default class GamePanel extends React.Component {
 			opacity: btnCtnOpacity
 		};
 
-		const buttonGroup = <Animated.View style={[{flex: 1, flexDirection: 'row'}, btnCtnTransformStyle]}>
+		const buttonGroup = (<Animated.View style={[{flex: 1, flexDirection: 'row'}, btnCtnTransformStyle]}>
 			<TouchableOpacity onPress={() => this.props.navigation.navigate('Game')}>
 				<Image
 					style={{
@@ -78,9 +80,9 @@ export default class GamePanel extends React.Component {
 				/>
 			</TouchableOpacity>
 			{/* <View style={{flex: 1}} /> */}
-		</Animated.View>
+		</Animated.View>)
 
-		const pingPong = <Image source={IMAGES.loading} style={{ alignSelf: 'center' }} resizeMode='center' />
+		const pingPong = (<Image source={IMAGES.loading} style={{ alignSelf: 'center' }} resizeMode='center' />)
 		
 		return (
 			<View style={{flex: 1}}>
@@ -98,9 +100,10 @@ export default class GamePanel extends React.Component {
 						>
 							<View style={{flex: 28}}></View>
 							<View
-								style={{flex: 50, paddingLeft: btnCtnOffset, paddingRight: btnCtnOffset}}
+								style={{flex: 50, paddingLeft: btnCtnLOffset, paddingRight: btnCtnROffset}}
 							>
-								{(this.panelType == 'game')? buttonGroup : pingPong}
+								{/* {(this.panelType == 'game')? buttonGroup : pingPong} */}
+								{(this.panelType == 'game')? buttonGroup : <VideoPlayer />}
 							</View>
 							<View style={{flex: 22}}></View>
 						</ImageBackground>
