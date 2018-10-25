@@ -59,27 +59,27 @@ export default class GamePanel extends React.Component {
 		};
 
 		const buttonGroup = (<Animated.View style={[{flex: 1, flexDirection: 'row'}, btnCtnTransformStyle]}>
-			<TouchableOpacity onPress={() => this.props.navigation.navigate('Game')}>
+			<TouchableOpacity onPress={() => this.props.navigation.navigate('Game')} style={{flex: 5}}>
 				<Image
 					style={{
 						flex: 1,
-						height: '100%',
+						width: '100%',
 						resizeMode
 					}}
 					source={IMAGES.play}
 				/>
 			</TouchableOpacity>
-			<TouchableOpacity onPress={() => this.props.navigation.navigate('Learn')}>
+			<TouchableOpacity onPress={() => this.props.navigation.navigate('Learn')} style={{flex: 5}}>
 				<Image
 					style={{
 						flex: 1,
-						height: '100%',
+						width: '100%',
 						resizeMode
 					}}
 					source={IMAGES.learn}
 				/>
 			</TouchableOpacity>
-			{/* <View style={{flex: 1}} /> */}
+			<View style={{flex: 3}} />
 		</Animated.View>)
 
 		const pingPong = (<Image source={IMAGES.loading} style={{ alignSelf: 'center' }} resizeMode='center' />)
