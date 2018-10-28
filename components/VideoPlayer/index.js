@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Text, Dimensions } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Video } from 'expo';
-import { MaterialIcons, Octicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { SCREEN } from '../../utiles';
 
 export default class VideoPlayer extends React.Component {
 	state = {
@@ -22,42 +23,39 @@ export default class VideoPlayer extends React.Component {
 		}));
 	}
 	render() {
-      const { width, height } = Dimensions.get('window');
-    
-      const videoHeight = height * 0.8 * 0.5;
-      const videoWidth = videoHeight * 2;
-      return (
-         <View style={styles.container}>
-            <View style={{flex: 1}}>
-               <Video
-                 source={{ uri:    
-        'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-                 shouldPlay={this.state.shouldPlay}
-                 resizeMode="cover"
-                 style={{ width: videoWidth, height: videoHeight }}
-                 isMuted={this.state.mute}
-               />
+		const { height } = SCREEN;
+		
+		const videoHeight = height * 0.8 * 0.5;
+		const videoWidth = videoHeight * 2;
+		return (
+			<View style={styles.container}>
+				<View style={{flex: 1}}>
+					<Video
+						source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+						shouldPlay={this.state.shouldPlay}
+						resizeMode="cover"
+						style={{ width: videoWidth, height: videoHeight }}
+						isMuted={this.state.mute}
+					/>
 
-               <View style={styles.controlBar}>
-                   <MaterialIcons
-                      name={this.state.mute ? "volume-mute" :
-                          "volume-up"}
-                      size={45}
-                      color="white"
-                      onPress={this.handleVolume}
-                   />
-                   <MaterialIcons
-                      name={this.state.shouldPlay ? "pause" : 
-                           "play-arrow"}
-                      size={45}
-                      color="white"
-                      onPress={this.handlePlayAndPause}
-                   />
-               </View>
-            </View>
-        </View>
-    );
-  }
+					<View style={styles.controlBar}>
+						<MaterialIcons
+							name={this.state.mute ? "volume-mute" : "volume-up"}
+							size={45}
+							color="white"
+							onPress={this.handleVolume}
+						/>
+						<MaterialIcons
+							name={this.state.shouldPlay ? "pause" : "play-arrow"}
+							size={45}
+							color="white"
+							onPress={this.handlePlayAndPause}
+						/>
+					</View>
+				</View>
+			</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
