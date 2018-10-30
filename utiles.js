@@ -21,6 +21,7 @@ export const IMAGES = {
     'clock': require('./assets/images/hud_time.png'),
     'energy': require('./assets/images/hud_energy.png'),
     'loading': require('./assets/images/loading.gif'),
+    'panel-s': require('./assets/images/bkgd_panel.png'),
 }
 
 export const SCREEN = { width, height } = Dimensions.get('window');

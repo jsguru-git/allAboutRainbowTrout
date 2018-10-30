@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import {LinearGradient} from 'expo';
-import GamePanel from '../../components/GampPanel';
+import GamePanel from '../GampPanel';
 import { IMAGES } from '../../utiles';
 
 export default class LearnScreen extends React.Component {

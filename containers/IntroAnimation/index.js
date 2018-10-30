@@ -28,13 +28,10 @@ class IntroAnimation extends React.Component {
   }
 
   componentDidMount() {
-		// Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
 		this.animate();
   }
 
-  componentWillUnmount() {
-    // Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
-	}
+  componentWillUnmount() {}
 	
 	animate() {
 		this.logo1AnimatedValue.setValue(0);
@@ -116,11 +113,11 @@ class IntroAnimation extends React.Component {
     }
 
     const logo1TransformStyle = {
-      transform: [{ translateY: logo1MoveY }, { scale:logo1Scale }]
+      transform: [{ translateY: logo1MoveY }, { scale: logo1Scale }]
     };
 
     const logo2TransformStyle = {
-      transform: [{ translateY: logo2MoveY }, { scale:logo2Scale }]
+      transform: [{ translateY: logo2MoveY }, { scale: logo2Scale }]
     };
 
     const logo3TransformStyle = {
@@ -168,8 +165,6 @@ class IntroAnimation extends React.Component {
 const styles = {
   logoWrapperContainer: {
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   logo1Container: {
     position: "absolute",

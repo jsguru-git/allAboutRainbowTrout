@@ -1,19 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { View, Image, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import timer from 'react-native-timer';
-import WaveAnimation from '../../components/WaveAnimation';
+import WaveAnimation from '../WaveAnimation';
+import ThreeTwoOneGo from '../ThreeTwoOneGo';
+import GameOver from '../GameOver';
 import { IMAGES, SCREEN } from '../../utiles';
 import { GAME_STATUS } from '../../actions';
-import { Font } from 'expo';
 
-const mapStateToProps = state => {
-	return {
-		gameState: state.gameState,
-	}
-}
-
-class GameScreen extends React.Component {
+export default class GameScreen extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -31,31 +25,11 @@ class GameScreen extends React.Component {
 			],
 			prevFishIdx: 0,
 			score: 0,
-			gameStatus: this.props.gameState.status,
-			timeRemaining: this.props.gameState.duration,
-			fontLoaded: false
+			gameStatus: GAME_STATUS.GAME_WAIT,
+			timeRemaining: 15,
 		}
 		this.isFishClicked = false;
 	}
-
-	async componentDidMount() {
-		await Font.loadAsync({
-			'Grobold': require('../../assets/fonts/GROBOLD.ttf'),
-		});
-		
-		this.startShowingFish();
-		this.startCountDownTimer();
-		this.setState({ fontLoaded: true });
-	}
-
-	componentWillReceiveProps(nextProps) {
-		this.setState({
-			gameStatus: nextProps.gameState.status,
-			timeRemaining: nextProps.gameState.duration,
-		});
-	}
-
-	componentWillUnmount() {}
 
 	startShowingFish() {
 		const showRandomFish = () => {
@@ -75,7 +49,7 @@ class GameScreen extends React.Component {
 		};
 
 		timer.setInterval(this, 'fishAppearingInterval', () => {
-			if (this.gameStatus !== GAME_STATUS.GAME_OVER) {
+			if (this.state.gameStatus !== GAME_STATUS.GAME_OVER) {
 				showRandomFish();
 			} else {
 				timer.clearInterval(this, 'fishAppearingInterval');
@@ -91,8 +65,27 @@ class GameScreen extends React.Component {
 				});
 			} else {
 				timer.clearInterval(this, 'countDownTimerInterval');
+				this.setState({
+					gameStatus: GAME_STATUS.GAME_OVER,
+				});
 			}
 		}, 1000);
+	}
+
+	startGame() {
+		this.startShowingFish();
+		this.startCountDownTimer();
+		this.setState({
+			gameStatus: GAME_STATUS.GAME_START,
+		});
+	}
+
+	reset() {
+		this.setState({
+			score: 0,
+			gameStatus: GAME_STATUS.GAME_WAIT,
+			timeRemaining: 15,
+		});
 	}
 
 	clickFish() {
@@ -117,11 +110,11 @@ class GameScreen extends React.Component {
 			<View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', padding: 5}}>
 				<View style={{flex: 1}}>
 					<Image source={IMAGES.score} style={styles.scoreImg} />
-					{ this.state.fontLoaded ? <Text style={styles.scoreTxt}>{ this.state.score }</Text> : null }
+					<Text style={styles.scoreTxt}>{ this.state.score }</Text>
 				</View>
 				<View style={{flex: 1}}>
 					<Image source={IMAGES.clock} style={styles.scoreImg} />
-					{ this.state.fontLoaded ? <Text style={styles.scoreTxt}>:{ this.state.timeRemaining }</Text> : null }
+					<Text style={styles.scoreTxt}>:{ this.state.timeRemaining }</Text>
 				</View>
 			</View>
 		);
@@ -137,7 +130,7 @@ class GameScreen extends React.Component {
 						<View style={{flex: 5, flexDirection: 'row'}}>
 							<View style={{flex: 4}}></View>
 							<View style={{flex: 3}}>
-								{ (this.gameStatus !== GAME_STATUS.GAME_OVER)? scoreView : null }
+								{ (this.state.gameStatus !== GAME_STATUS.GAME_OVER)? scoreView : null }
 							</View>
 						</View>
 						<View style={{flex: 14}}>
@@ -162,6 +155,14 @@ class GameScreen extends React.Component {
 						</View>)
 					)}
 				</View>
+				{ (this.state.gameStatus == GAME_STATUS.GAME_WAIT) ?
+					(<View style={styles.overScreen}>
+						<ThreeTwoOneGo count={4} callback={this.startGame.bind(this)} />
+					</View>) : null}
+				{ (this.state.gameStatus == GAME_STATUS.GAME_OVER) ? 
+					(<View style={{...styles.overScreen, zIndex: 2}}>
+						<GameOver navigation={this.props.navigation} restart={this.reset.bind(this)} score={this.state.score} />
+					</View>) : null }
 			</View>
 		);
 	}
@@ -184,7 +185,7 @@ const styles = {
 	},
 	smallFishCtn: {
 		position: 'absolute',
-		zIndex: 0,
+		zIndex: 2,
 		bottom: '30%',
 		flexDirection: 'row'
 	},
@@ -202,7 +203,13 @@ const styles = {
 		fontFamily: 'Grobold',
 		fontSize: 23,
 		color: 'white'
+	},
+	overScreen: {
+		flex: 1,
+		position: 'absolute',
+		top: 0,
+		bottom: 0,
+		width: SCREEN.width,
+		height: SCREEN.height
 	}
 }
-
-export default connect(mapStateToProps)(GameScreen)

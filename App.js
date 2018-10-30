@@ -13,6 +13,8 @@ import {
 } from 'react-navigation-redux-helpers';
 import { loadingReducer, gameStateReducer } from './reducer';
 import AppNavigator from './navigator';
+import { setCustomText } from 'react-native-global-props';
+import { Font } from 'expo';
 
 
 const navReducer = createNavigationReducer(AppNavigator);
@@ -38,11 +40,41 @@ const store = createStore(
 );
 
 export default class App extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      fontLoaded: false,
+    }
+  }
+  async componentDidMount() {
+		await Font.loadAsync({
+			'Grobold': require('./assets/fonts/GROBOLD.ttf'),
+		});
+		
+		this.setState({ 
+      fontLoaded: true
+    });
+    // this.defaultFonts();
+  }
+  
+  defaultFonts() {
+    const customTextProps = {
+      style: {
+        fontFamily: 'Grobold',
+        color: 'white',
+      }
+    }
+
+    setCustomText(customTextProps);
+  }
+  
   render() {
     return (
-      <Provider store={store}>
-        <AppWithNavigationState />
-      </Provider>
+      this.state.fontLoaded ?
+        (<Provider store={store}>
+          <AppWithNavigationState />
+        </Provider>) : null
     );
   }
 }
